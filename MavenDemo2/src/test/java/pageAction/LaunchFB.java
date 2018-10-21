@@ -3,6 +3,8 @@ package pageAction;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,6 +29,12 @@ public class LaunchFB extends TestBase{
 		// TODO Auto-generated method stub
 	@Test
 	public void facebook() throws Exception {
+		//which  we want to create log file in my case Demo is classname
+		Logger logger=Logger.getLogger("LaunchFB");
+		
+		// configure log4j properties file
+	    PropertyConfigurator.configure("log4j.properties");
+	    
 //		String browser = "Chrome";
 		String pTitleActual = "";
 		String pTitleExpected = "Facebook � log in or sign up";
@@ -39,10 +47,12 @@ public class LaunchFB extends TestBase{
 		tb.initialiseDriver(prop.getProperty("browserType"));
 		OR_FB objFB = PageFactory.initElements(driver, OR_FB.class);
 		driver.get(prop.getProperty("url_FB"));
+		logger.info("Successfully navigated to facebook login page");
+		//System.out.println(prop.getProperty("userName_FB"));
 		
-		System.out.println(prop.getProperty("userName_FB"));
 		System.out.println(prop.getProperty("pwd_FB"));
 		tb.setText(objFB.uName, prop.getProperty("userName_FB"));
+		logger.info("input to username is : "+ prop.getProperty("userName_FB"));
 		tb.setText(objFB.pWord, prop.getProperty("pwd_FB"));
 		tb.selectFromDropdown(objFB.dobDay, "25", "typeValue");
 		tb.selectFromDropdown(objFB.dobMonth, "Aug", "typeText");
